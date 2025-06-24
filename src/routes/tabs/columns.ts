@@ -1,18 +1,8 @@
 import { renderComponent, renderSnippet } from "$lib/components/ui/data-table";
 import { createRawSnippet } from "svelte";
 import SortingButton from "./sorting-button.svelte";
-import Actions from "./actions.svelte";
 import type { ColumnDef } from "@tanstack/table-core";
 import type { Tab } from "$lib/types/Tab";
-
-// export type Tab = {
-// 	id: string;
-// 	song: string;
-// 	artist: string;
-// 	tuning: string;
-// 	instrument: string;
-// 	link: string;
-// };
 
 export const columns: ColumnDef<Tab>[] = [
 	{
@@ -56,12 +46,6 @@ export const columns: ColumnDef<Tab>[] = [
 			}));
 
 			return renderSnippet(linkFormat, "");
-		}
-	},
-	{
-		id: "actions",
-		cell: ({ row }) => {
-			return renderComponent(Actions, { id: row.original.id as string, tab: row.original });
 		}
 	}
 ];

@@ -2,7 +2,7 @@
 	import { enhance } from "$app/forms";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 	import * as Avatar from "$lib/components/ui/avatar";
-	import AddTab from "./add-tab.svelte";
+	import AddTab from "./add-tab-old.svelte";
 
 	let { form } = $props();
 	let open = $state(false);

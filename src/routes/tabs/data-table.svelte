@@ -1,19 +1,20 @@
 <script lang="ts" generics="TData, TValue">
-	import {
-		type ColumnDef,
-		type SortingState,
-		getCoreRowModel,
-		getSortedRowModel
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type SortingState, getCoreRowModel, getSortedRowModel } from "@tanstack/table-core";
 	import { createSvelteTable, FlexRender } from "$lib/components/ui/data-table";
 	import * as Table from "$lib/components/ui/table";
+	import type { Infer, SuperValidated } from "sveltekit-superforms";
+	import type { DeleteTabSchema, EditTabSchema } from "$lib/tab-schema";
+	import RowActions from "./row-actions.svelte";
+	import type { Tab } from "$lib/types/Tab";
 
 	type DataTableProps<TData, TValue> = {
 		columns: ColumnDef<TData, TValue>[];
 		data: TData[];
+		editTabAction: SuperValidated<Infer<EditTabSchema>>;
+		deleteTabAction: SuperValidated<Infer<DeleteTabSchema>>;
 	};
 
-	let { data, columns }: DataTableProps<TData, TValue> = $props();
+	let { data, columns, editTabAction, deleteTabAction }: DataTableProps<TData, TValue> = $props();
 	let sorting = $state<SortingState>([]);
 
 	const table = createSvelteTable({
@@ -46,10 +47,7 @@
 					{#each headerGroup.headers as header (header.id)}
 						<Table.Head>
 							{#if !header.isPlaceholder}
-								<FlexRender
-									content={header.column.columnDef.header}
-									context={header.getContext()}
-								/>
+								<FlexRender content={header.column.columnDef.header} context={header.getContext()} />
 							{/if}
 						</Table.Head>
 					{/each}
@@ -64,6 +62,9 @@
 							<FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
 						</Table.Cell>
 					{/each}
+					<Table.Cell>
+						<RowActions id={row.id} tab={row.original as Tab} {editTabAction} {deleteTabAction} />
+					</Table.Cell>
 				</Table.Row>
 			{:else}
 				<Table.Row>

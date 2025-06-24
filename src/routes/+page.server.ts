@@ -1,81 +1,68 @@
 import { fail, redirect } from "@sveltejs/kit";
-import { ClientResponseError } from "pocketbase";
-import type { PageServerLoad } from "./$types.js";
+import type { Actions, PageServerLoad } from "./$types.js";
+
+// form validation
+import { setError, superValidate } from "sveltekit-superforms";
+import { zod4 } from "sveltekit-superforms/adapters";
+import { loginSchema, registerSchema } from "$lib/account-schema.js";
 
 export const load = (async ({ locals }) => {
 	if (locals.pb.authStore.isValid) {
 		return redirect(303, "/tabs");
 	}
 
-	return {};
+	const loginForm = await superValidate(zod4(loginSchema));
+	const registerForm = await superValidate(zod4(registerSchema));
+
+	return { loginForm, registerForm };
 }) satisfies PageServerLoad;
 
 export const actions = {
-	createAccount: async ({ locals, request }) => {
-		const data = await request.formData();
-		const first_name = data.get("first-name");
-		const last_name = data.get("last-name");
-		const email = data.get("email");
-		const password = data.get("password");
-		const passwordConfirm = data.get("confirm-password");
+	register: async ({ locals, request }) => {
+		const registerForm = await superValidate(request, zod4(registerSchema));
 
-		if (!email || !password || !passwordConfirm) {
-			return fail(400, { emailRequired: email === null, passwordRequired: password === null });
+		if (!registerForm.valid) {
+			return fail(400, { registerForm });
 		}
 
 		const account_info = {
-			first_name,
-			last_name,
-			email,
-			password,
-			passwordConfirm
+			first_name: registerForm.data.first_name,
+			last_name: registerForm.data.last_name,
+			email: registerForm.data.email,
+			password: registerForm.data.password,
+			passwordConfirm: registerForm.data.password_confirm
 		};
 
 		try {
 			await locals.pb.collection("users").create(account_info);
-			await locals.pb.collection("users").requestVerification(email.toString());
-			await locals.pb.collection("users").authWithPassword(email.toString(), password.toString());
-		} catch (err) {
-			const errObj = err as ClientResponseError;
-			return fail(500, { fail: true, message: errObj.data.message });
+			await locals.pb.collection("users").requestVerification(registerForm.data.email.toString());
+			await locals.pb
+				.collection("users")
+				.authWithPassword(
+					registerForm.data.email.toString(),
+					registerForm.data.password.toString()
+				);
+		} catch {
+			return setError(registerForm, "password", "Username/password are incorrect");
 		}
+
+		return { registerForm };
 	},
 	login: async ({ locals, request }) => {
-		const data = await request.formData();
-		const email = data.get("email");
-		const password = data.get("password");
+		const loginForm = await superValidate(request, zod4(loginSchema));
 
-		if (!email || !password) {
-			return fail(400, { emailRequired: email === null, passwordRequired: password === null });
+		if (!loginForm.valid) {
+			return fail(400, { loginForm });
 		}
 
 		try {
-			await locals.pb.collection("users").authWithPassword(email.toString(), password.toString());
-		} catch (err) {
-			const errObj = err as ClientResponseError;
-			return fail(500, { fail: true, message: errObj.data.message });
-		}
-	},
-	register: async ({ locals, request }) => {
-		const data = await request.formData();
-		const email = data.get("email") as string;
-		const password = data.get("password");
-
-		if (!email || !password) {
-			return fail(400, { emailRequired: email === null, passwordRequired: password === null });
+			await locals.pb
+				.collection("users")
+				.authWithPassword(loginForm.data.email.toString(), loginForm.data.password.toString());
+		} catch {
+			return setError(loginForm, "password", "Username/password are incorrect");
 		}
 
-		data.set("passwordConfirm", password?.toString());
-
-		try {
-			await locals.pb.collection("users").create(data);
-			await locals.pb.collection("users").authWithPassword(email, password.toString());
-			await locals.pb.collection('users"').requestVerification(email);
-		} catch (err) {
-			const errObj = err as ClientResponseError;
-			return fail(500, { fail: true, message: errObj.data.message });
-		}
-
-		throw redirect(303, "/tabs");
+		return { loginForm };
 	}
-};
+} satisfies Actions;

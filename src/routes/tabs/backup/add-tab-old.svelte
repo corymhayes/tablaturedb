@@ -1,30 +1,39 @@
 <script lang="ts">
-	import * as Dialog from "$lib/components/ui/dialog";
-	import { Button, buttonVariants } from "$lib/components/ui/button";
+	import * as AlertDialog from "$lib/components/ui/alert-dialog";
+	import { Button } from "$lib/components/ui/button";
+	import { Plus } from "@lucide/svelte";
 	import Input from "$lib/components/input.svelte";
 	import { superForm, type SuperValidated, type Infer } from "sveltekit-superforms";
 	import { type AddTabSchema } from "$lib/tab-schema";
-	import { toast } from "svelte-sonner";
 
+	// let {
+	// 	openDialog = $bindable(),
+	// 	data
+	// }: { openDialog: boolean; data: SuperValidated<Infer<AddTabSchema>> } = $props();
 	let { data }: { data: SuperValidated<Infer<AddTabSchema>> } = $props();
 
-	const { form, errors, constraints, enhance } = superForm(data, {
-		onUpdated({ form }) {
-			if (form.valid) {
-				toast.success(form.message);
-			}
-		}
-	});
+	const { form, errors, constraints, enhance } = superForm(data);
+
+	// function handleKeyDown(e: KeyboardEvent) {
+	// 	if (e.key === "n") {
+	// 		openDialog = true;
+	// 	}
+	// }
 </script>
 
-<Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: "default" })}>Add tab</Dialog.Trigger>
-	<Dialog.Content>
-		<Dialog.Header>
-			<Dialog.Title>Add tab</Dialog.Title>
-		</Dialog.Header>
+<!-- <svelte:window onkeydown={handleKeyDown} /> -->
+
+<!-- <AlertDialog.Root open={openDialog} onOpenChange={(open) => (openDialog = open)}> -->
+<AlertDialog.Root>
+	<AlertDialog.Trigger>
+		<Button><Plus />Add Tab</Button>
+	</AlertDialog.Trigger>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Add tab</AlertDialog.Title>
+		</AlertDialog.Header>
 		<form action="?/addTab" method="POST" use:enhance>
-			<div class="my-7 flex flex-col gap-5">
+			<div class="mb-7 flex flex-col gap-5">
 				<Input
 					name="song"
 					type="text"
@@ -68,9 +77,10 @@
 					constraints={$constraints.link}
 				/>
 			</div>
-			<Dialog.Footer>
+			<AlertDialog.Footer>
+				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 				<Button type="submit">Save</Button>
-			</Dialog.Footer>
+			</AlertDialog.Footer>
 		</form>
-	</Dialog.Content>
-</Dialog.Root>
+	</AlertDialog.Content>
+</AlertDialog.Root>

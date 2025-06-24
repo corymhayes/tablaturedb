@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog";
-	import { Input } from "$lib/components/ui/input";
+	import Input from "$lib/components/input.svelte";
 	import { Button } from "$lib/components/ui/button";
-	import { Label } from "$lib/components/ui/label";
 	import { Pencil, Plus } from "@lucide/svelte";
 	import type { Tab } from "$lib/types/Tab";
+	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
+	import { type EditTabSchema } from "$lib/tab-schema";
 
-	let { tab }: { tab: Tab; type: string } = $props();
+	let { tab, data }: { tab: Tab; data: SuperValidated<Infer<EditTabSchema>> } = $props();
+
+	const { form, errors, constraints, enhance } = superForm(data, {
+		id: `${tab.id}`
+	});
 </script>
 
 <AlertDialog.Root>
@@ -20,31 +24,51 @@
 		<AlertDialog.Header>
 			<AlertDialog.Title>Edit tab</AlertDialog.Title>
 		</AlertDialog.Header>
-		<form action="?/update" method="POST" use:enhance>
+		<form action="?/edit" method="POST" use:enhance>
 			<div class="mb-7 flex flex-col gap-5">
-				<Input type="hidden" name="id" value={tab.id} />
-				<div class="flex w-full flex-col gap-1.5">
-					<Label for="email">Song</Label>
-					<Input type="text" name="song" value={tab.song} />
-				</div>
-				<div class="flex w-full flex-col gap-1.5">
-					<Label for="email">Artist</Label>
-					<Input type="text" name="artist" value={tab.artist} />
-				</div>
+				<Input name="id" type="hidden" label="" value={`${tab.id}`} />
+				<Input
+					name="song"
+					type="text"
+					label="Song"
+					value={tab.song as string}
+					errors={$errors.song}
+					constraints={$constraints.song}
+				/>
+				<Input
+					name="artist"
+					type="text"
+					label="Artist"
+					value={tab.artist as string}
+					errors={$errors.artist}
+					constraints={$constraints.artist}
+				/>
 				<div class="flex justify-between gap-5">
-					<div class="flex w-full flex-col gap-1.5">
-						<Label for="email">Tuning</Label>
-						<Input type="text" name="tuning" value={tab.tuning} />
-					</div>
-					<div class="flex w-full flex-col gap-1.5">
-						<Label for="email">Instrument</Label>
-						<Input type="text" name="instrument" value={tab.instrument} />
-					</div>
+					<Input
+						name="tuning"
+						type="text"
+						label="Tuning"
+						value={tab.tuning as string}
+						errors={$errors.tuning}
+						constraints={$constraints.tuning}
+					/>
+					<Input
+						name="instrument"
+						type="text"
+						label="Instrument"
+						value={tab.instrument as string}
+						errors={$errors.instrument}
+						constraints={$constraints.instrument}
+					/>
 				</div>
-				<div class="flex w-full flex-col gap-1.5">
-					<Label for="email">Link</Label>
-					<Input type="text" name="link" value={tab.link} />
-				</div>
+				<Input
+					name="link"
+					type="text"
+					label="Link"
+					value={tab.link as string}
+					errors={$errors.link}
+					constraints={$constraints.link}
+				/>
 			</div>
 			<AlertDialog.Footer>
 				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

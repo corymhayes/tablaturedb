@@ -9,6 +9,7 @@
 	let { data }: { data: SuperValidated<Infer<AddTabSchema>> } = $props();
 
 	const { form, errors, constraints, enhance } = superForm(data, {
+		id: `tab-${data.id}`,
 		onUpdated({ form }) {
 			if (form.valid) {
 				toast.success(form.message);

@@ -10,7 +10,7 @@
 	let { tab, data }: { tab: Tab; data: SuperValidated<Infer<EditTabSchema>> } = $props();
 
 	const { form, errors, constraints, enhance } = superForm(data, {
-		id: `${tab.id}`
+		id: `edit-${tab.id}`
 	});
 </script>
 

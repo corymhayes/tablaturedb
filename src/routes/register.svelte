@@ -12,12 +12,12 @@
 	const { form, errors, constraints, enhance } = superForm(data);
 </script>
 
-<form action="?/register" method="POST" use:enhance>
-	<Card.Root class="w-[350px]">
-		<Card.Header>
-			<Card.Title>Create Account</Card.Title>
-		</Card.Header>
-		<Card.Content class="flex flex-col gap-5">
+<Card.Root class="w-[350px]">
+	<Card.Header>
+		<Card.Title>Create Account</Card.Title>
+	</Card.Header>
+	<Card.Content>
+		<form class="flex flex-col gap-5" action="?/register" method="POST" use:enhance>
 			<div class="flex justify-between gap-5">
 				<div class="flex w-full flex-col gap-1.5">
 					<Input
@@ -70,9 +70,9 @@
 					constraints={$constraints.password_confirm}
 				/>
 			</div>
-		</Card.Content>
-		<Card.Footer>
-			<Button class="w-30" type="submit">Create</Button>
-		</Card.Footer>
-	</Card.Root>
-</form>
+		</form>
+	</Card.Content>
+	<Card.Footer>
+		<Button class="w-30" type="submit">Create</Button>
+	</Card.Footer>
+</Card.Root>

@@ -38,10 +38,7 @@ export const actions = {
 			await locals.pb.collection("users").requestVerification(registerForm.data.email.toString());
 			await locals.pb
 				.collection("users")
-				.authWithPassword(
-					registerForm.data.email.toString(),
-					registerForm.data.password.toString()
-				);
+				.authWithPassword(registerForm.data.email.toString(), registerForm.data.password.toString());
 		} catch {
 			return setError(registerForm, "password", "Username/password are incorrect");
 		}
@@ -60,7 +57,10 @@ export const actions = {
 				.collection("users")
 				.authWithPassword(loginForm.data.email.toString(), loginForm.data.password.toString());
 		} catch {
-			return setError(loginForm, "password", "Username/password are incorrect");
+			return (
+				setError(loginForm, "email", "Username/password are incorrect"),
+				setError(loginForm, "password", "Username/password are incorrect")
+			);
 		}
 
 		return { loginForm };

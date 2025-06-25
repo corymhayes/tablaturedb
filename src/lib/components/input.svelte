@@ -22,14 +22,7 @@
 </script>
 
 <div class="flex w-full flex-col gap-1.5">
-	<Label for={label}>{label}</Label>
-	<Input
-		{name}
-		{type}
-		bind:value
-		aria-invalid={errors ? "true" : undefined}
-		{...constraints}
-		{...rest}
-	/>
-	{#if errors}<span class="text-sm text-red-500">{errors}</span>{/if}
+	<Label for={label} class={errors ? "text-red-500" : "text-white"}>{label}</Label>
+	<Input {name} {type} bind:value aria-invalid={errors ? "true" : undefined} {...constraints} {...rest} />
+	<!-- {#if errors}<span class="text-xs text-red-500">{errors}</span>{/if} -->
 </div>

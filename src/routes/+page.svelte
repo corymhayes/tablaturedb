@@ -1,19 +1,26 @@
 <script lang="ts">
-	import * as Card from "$lib/components/ui/card";
-	import { Input } from "$lib/components/ui/input";
-	import { Button } from "$lib/components/ui/button";
-	import { Label } from "$lib/components/ui/label";
-	import SuperDebug, { superForm } from "sveltekit-superforms";
-
+	import * as Tabs from "$lib/components/ui/tabs";
 	import Login from "./login.svelte";
 	import Register from "./register.svelte";
 
 	let { data } = $props();
 </script>
 
-<!-- TODO: put into a tabbed card  -->
+<div class="flex flex-col items-center gap-8">
+	<h1 class="scroll-m-20 text-4xl font-bold tracking-tight lg:text-3xl">
+		Tablature<span class="text-primary font-extrabold">DB</span>
+	</h1>
+	<Tabs.Root value="login">
+		<Tabs.List>
+			<Tabs.Trigger value="login">Login</Tabs.Trigger>
+			<Tabs.Trigger value="register">Create account</Tabs.Trigger>
+		</Tabs.List>
+		<Tabs.Content value="login">
+			<Login data={data.loginForm} />
+		</Tabs.Content>
 
-<div class="flex h-screen w-full items-center justify-center gap-10">
-	<Login data={data.loginForm} />
-	<Register data={data.registerForm} />
+		<Tabs.Content value="register">
+			<Register data={data.registerForm} />
+		</Tabs.Content>
+	</Tabs.Root>
 </div>

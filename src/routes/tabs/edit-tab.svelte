@@ -2,7 +2,7 @@
 	import * as AlertDialog from "$lib/components/ui/alert-dialog";
 	import Input from "$lib/components/input.svelte";
 	import { Button } from "$lib/components/ui/button";
-	import { Pencil, Plus } from "@lucide/svelte";
+	import { Pencil } from "@lucide/svelte";
 	import type { Tab } from "$lib/types/Tab";
 	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
 	import { type EditTabSchema } from "$lib/tab-schema";

@@ -6,14 +6,12 @@
 	import type { DeleteTabSchema, EditTabSchema } from "$lib/tab-schema";
 
 	let {
-		id,
 		tab,
 		editTabAction,
 		deleteTabAction,
 		tunings,
 		instruments
 	}: {
-		id: string;
 		tab: Tab;
 		editTabAction: SuperValidated<Infer<EditTabSchema>>;
 		deleteTabAction: SuperValidated<Infer<DeleteTabSchema>>;
@@ -24,5 +22,5 @@
 
 <div class="flex justify-end gap-2">
 	<EditTab {tab} data={editTabAction} {tunings} {instruments} />
-	<DeleteTab {id} data={deleteTabAction} />
+	<DeleteTab id={tab.id as string} song={tab.song as string} data={deleteTabAction} />
 </div>

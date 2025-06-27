@@ -64,10 +64,11 @@ export const actions = {
 
 		try {
 			await locals.pb.collection("tabs").delete(`${deleteForm.data.id}`);
-			return { deleteForm };
 		} catch {
 			return setError(deleteForm, "id", "Unable to delete");
 		}
+
+		return message(deleteForm, "Tab deleted!");
 	},
 	edit: async ({ locals, request }) => {
 		const editTabForm = await superValidate(request, zod4(editTabSchema));

@@ -27,12 +27,12 @@
 	});
 
 	form.update(($form) => {
-		$form.id = tab.id;
-		$form.song = tab.song;
-		$form.artist = tab.artist;
-		$form.tuning = tab.tuning;
-		$form.instrument = tab.instrument;
-		$form.link = tab.link;
+		$form.id = tab.id as string;
+		$form.song = tab.song as string;
+		$form.artist = tab.artist as string;
+		$form.tuning = tab.tuning as string;
+		$form.instrument = tab.instrument as string;
+		$form.link = tab.link as string;
 		return $form;
 	});
 </script>

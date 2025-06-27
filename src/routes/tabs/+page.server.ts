@@ -16,6 +16,8 @@ export const load = async ({ locals }) => {
 	const deleteTabForm = await superValidate(zod4(deleteTabSchema));
 
 	let tabs: Tab[] = [];
+	const tunings = locals.user?.tunings;
+	const instruments = locals.user?.instruments;
 
 	tabs = await locals.pb.collection("tabs").getFullList({
 		filter: `user="${locals.pb.authStore.record?.id}"`,
@@ -23,7 +25,7 @@ export const load = async ({ locals }) => {
 		sort: "song"
 	});
 
-	return { tabs, addTabForm, editTabForm, deleteTabForm };
+	return { tabs, tunings, instruments, addTabForm, editTabForm, deleteTabForm };
 };
 
 export const actions = {
@@ -33,6 +35,8 @@ export const actions = {
 	},
 	addTab: async ({ locals, request }) => {
 		const addTabForm = await superValidate(request, zod4(addTabSchema));
+
+		console.log(addTabForm);
 
 		if (!addTabForm.valid) {
 			return fail(400, { addForm: addTabForm });
@@ -56,9 +60,7 @@ export const actions = {
 		return message(addTabForm, "Tab added!");
 	},
 	delete: async ({ locals, request }) => {
-		const deleteForm = await superValidate(request, zod4(deleteTabSchema), {
-			id: ""
-		});
+		const deleteForm = await superValidate(request, zod4(deleteTabSchema));
 
 		try {
 			await locals.pb.collection("tabs").delete(`${deleteForm.data.id}`);
@@ -83,7 +85,6 @@ export const actions = {
 			link: editTabForm.data.link
 		};
 
-		// if no ID, add a user to the tab object
 		try {
 			await locals.pb.collection("tabs").update(`${tab.id}`, tab);
 		} catch {

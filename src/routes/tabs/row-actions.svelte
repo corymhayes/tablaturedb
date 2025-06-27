@@ -9,16 +9,20 @@
 		id,
 		tab,
 		editTabAction,
-		deleteTabAction
+		deleteTabAction,
+		tunings,
+		instruments
 	}: {
 		id: string;
 		tab: Tab;
 		editTabAction: SuperValidated<Infer<EditTabSchema>>;
 		deleteTabAction: SuperValidated<Infer<DeleteTabSchema>>;
+		tunings: string[];
+		instruments: string[];
 	} = $props();
 </script>
 
 <div class="flex justify-end gap-2">
-	<EditTab {tab} data={editTabAction} />
+	<EditTab {tab} data={editTabAction} {tunings} {instruments} />
 	<DeleteTab {id} data={deleteTabAction} />
 </div>

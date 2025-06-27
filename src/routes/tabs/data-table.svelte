@@ -12,9 +12,11 @@
 		data: TData[];
 		editTabAction: SuperValidated<Infer<EditTabSchema>>;
 		deleteTabAction: SuperValidated<Infer<DeleteTabSchema>>;
+		tunings: string[];
+		instruments: string[];
 	};
 
-	let { data, columns, editTabAction, deleteTabAction }: DataTableProps<TData, TValue> = $props();
+	let { data, columns, editTabAction, deleteTabAction, tunings, instruments }: DataTableProps<TData, TValue> = $props();
 	let sorting = $state<SortingState>([]);
 
 	const table = createSvelteTable({
@@ -63,7 +65,7 @@
 						</Table.Cell>
 					{/each}
 					<Table.Cell>
-						<RowActions id={row.id} tab={row.original as Tab} {editTabAction} {deleteTabAction} />
+						<RowActions id={row.id} tab={row.original as Tab} {editTabAction} {deleteTabAction} {tunings} {instruments} />
 					</Table.Cell>
 				</Table.Row>
 			{:else}

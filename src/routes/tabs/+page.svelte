@@ -12,8 +12,15 @@
 			Tablature<span class="text-primary font-extrabold">DB</span>
 		</h1>
 		<div class="flex items-center gap-2">
-			<AddTab data={data.addTabForm} />
+			<AddTab data={data.addTabForm} tunings={data.tunings} instruments={data.instruments} />
 		</div>
 	</div>
-	<DataTable data={data.tabs} {columns} editTabAction={data.editTabForm} deleteTabAction={data.deleteTabForm} />
+	<DataTable
+		data={data.tabs}
+		{columns}
+		editTabAction={data.editTabForm}
+		deleteTabAction={data.deleteTabForm}
+		tunings={data.tunings}
+		instruments={data.instruments}
+	/>
 </div>

@@ -5,8 +5,13 @@
 	import { superForm, type SuperValidated, type Infer } from "sveltekit-superforms";
 	import { type AddTabSchema } from "$lib/tab-schema";
 	import { toast } from "svelte-sonner";
+	import SettingsSelect from "$lib/components/settings-select.svelte";
 
-	let { data }: { data: SuperValidated<Infer<AddTabSchema>> } = $props();
+	let {
+		data,
+		tunings,
+		instruments
+	}: { data: SuperValidated<Infer<AddTabSchema>>; tunings: string[]; instruments: string[] } = $props();
 
 	const { form, errors, constraints, enhance } = superForm(data, {
 		id: `tab-${data.id}`,
@@ -43,22 +48,8 @@
 					constraints={$constraints.artist}
 				/>
 				<div class="flex justify-between gap-5">
-					<Input
-						name="tuning"
-						type="text"
-						label="Tuning"
-						bind:value={$form.tuning}
-						errors={$errors.tuning}
-						constraints={$constraints.tuning}
-					/>
-					<Input
-						name="instrument"
-						type="text"
-						label="Instrument"
-						bind:value={$form.instrument}
-						errors={$errors.instrument}
-						constraints={$constraints.instrument}
-					/>
+					<SettingsSelect label="Tuning" name="tuning" settings={tunings} bind:value={$form.tuning} />
+					<SettingsSelect label="Instruments" name="instrument" settings={instruments} bind:value={$form.instrument} />
 				</div>
 				<Input
 					name="link"

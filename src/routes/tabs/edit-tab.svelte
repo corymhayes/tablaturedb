@@ -6,11 +6,34 @@
 	import type { Tab } from "$lib/types/Tab";
 	import { superForm, type Infer, type SuperValidated } from "sveltekit-superforms";
 	import { type EditTabSchema } from "$lib/tab-schema";
+	import SettingsSelect from "$lib/components/settings-select.svelte";
+	import { toast } from "svelte-sonner";
 
-	let { tab, data }: { tab: Tab; data: SuperValidated<Infer<EditTabSchema>> } = $props();
+	let {
+		tab,
+		data,
+		tunings,
+		instruments
+	}: { tab: Tab; data: SuperValidated<Infer<EditTabSchema>>; tunings: string[]; instruments: string[] } = $props();
 
 	const { form, errors, constraints, enhance } = superForm(data, {
-		id: `edit-${tab.id}`
+		id: `edit-${tab.id}`,
+		resetForm: false,
+		onUpdated({ form }) {
+			if (form.valid) {
+				toast.success(form.message);
+			}
+		}
+	});
+
+	form.update(($form) => {
+		$form.id = tab.id;
+		$form.song = tab.song;
+		$form.artist = tab.artist;
+		$form.tuning = tab.tuning;
+		$form.instrument = tab.instrument;
+		$form.link = tab.link;
+		return $form;
 	});
 </script>
 
@@ -20,7 +43,7 @@
 			<Pencil />
 		</Button>
 	</AlertDialog.Trigger>
-	<AlertDialog.Content class="w-96">
+	<AlertDialog.Content class="w-[500px]">
 		<AlertDialog.Header>
 			<AlertDialog.Title>Edit tab</AlertDialog.Title>
 		</AlertDialog.Header>
@@ -31,7 +54,7 @@
 					name="song"
 					type="text"
 					label="Song"
-					value={tab.song as string}
+					value={$form.song}
 					errors={$errors.song}
 					constraints={$constraints.song}
 				/>
@@ -39,33 +62,19 @@
 					name="artist"
 					type="text"
 					label="Artist"
-					value={tab.artist as string}
+					value={$form.artist}
 					errors={$errors.artist}
 					constraints={$constraints.artist}
 				/>
 				<div class="flex justify-between gap-5">
-					<Input
-						name="tuning"
-						type="text"
-						label="Tuning"
-						value={tab.tuning as string}
-						errors={$errors.tuning}
-						constraints={$constraints.tuning}
-					/>
-					<Input
-						name="instrument"
-						type="text"
-						label="Instrument"
-						value={tab.instrument as string}
-						errors={$errors.instrument}
-						constraints={$constraints.instrument}
-					/>
+					<SettingsSelect label="Tuning" name="tuning" settings={tunings} bind:value={$form.tuning} />
+					<SettingsSelect label="Instrument" name="instrument" settings={instruments} bind:value={$form.instrument} />
 				</div>
 				<Input
 					name="link"
 					type="text"
 					label="Link"
-					value={tab.link as string}
+					value={$form.link}
 					errors={$errors.link}
 					constraints={$constraints.link}
 				/>

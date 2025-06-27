@@ -65,7 +65,7 @@
 						</Table.Cell>
 					{/each}
 					<Table.Cell>
-						<RowActions id={row.id} tab={row.original as Tab} {editTabAction} {deleteTabAction} {tunings} {instruments} />
+						<RowActions tab={row.original as Tab} {editTabAction} {deleteTabAction} {tunings} {instruments} />
 					</Table.Cell>
 				</Table.Row>
 			{:else}

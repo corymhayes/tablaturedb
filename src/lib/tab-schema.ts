@@ -21,6 +21,12 @@ export const deleteTabSchema = z.object({
 	id: z.string()
 });
 
+export const settingsSchema = z.object({
+	tuning: z.string(),
+	instrument: z.string()
+});
+
 export type AddTabSchema = typeof addTabSchema;
 export type EditTabSchema = typeof editTabSchema;
 export type DeleteTabSchema = typeof deleteTabSchema;
+export type SettingsSchema = typeof settingsSchema;

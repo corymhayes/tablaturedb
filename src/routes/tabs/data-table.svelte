@@ -45,7 +45,7 @@
 	<Table.Root>
 		<Table.Header>
 			{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-				<Table.Row class="h-12">
+				<Table.Row class="h-12 hover:bg-transparent">
 					{#each headerGroup.headers as header (header.id)}
 						<Table.Head>
 							{#if !header.isPlaceholder}

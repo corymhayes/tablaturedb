@@ -10,8 +10,9 @@
 	let {
 		data,
 		tunings,
-		instruments
-	}: { data: SuperValidated<Infer<AddTabSchema>>; tunings: string[]; instruments: string[] } = $props();
+		instruments,
+		open = $bindable(false)
+	}: { data: SuperValidated<Infer<AddTabSchema>>; tunings: string[]; instruments: string[]; open: boolean } = $props();
 
 	const { form, errors, constraints, enhance } = superForm(data, {
 		id: `tab-${data.id}`,
@@ -21,10 +22,17 @@
 			}
 		}
 	});
+
+	function handleKeyDown(e: KeyboardEvent) {
+		if (e.key === "n") {
+			open = true;
+		}
+	}
 </script>
 
-<Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: "default" })}>Add tab</Dialog.Trigger>
+<svelte:window onkeydown={handleKeyDown} />
+
+<Dialog.Root bind:open>
 	<Dialog.Content>
 		<Dialog.Header>
 			<Dialog.Title>Add tab</Dialog.Title>

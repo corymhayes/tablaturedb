@@ -43,15 +43,14 @@ GOOGLE_CLIENT_ID="..."
 GOOGLE_CLIENT_SECRET="..."
 ```
 
-Install & Run
+### Install & Run
 ```bash
 npm install
 npm run db:push    # Create tables
 npm run dev        # Start dev server
 ```
 
-Scripts
-
+### Scripts
 | Command             | Description                  |
 | ------------------- | ---------------------------- |
 | npm run dev         | Start dev server             |

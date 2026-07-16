@@ -1,0 +1,1 @@
+ALTER TABLE "tablatures" ADD COLUMN "user_id" uuid;

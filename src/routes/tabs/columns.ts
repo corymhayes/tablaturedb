@@ -1,8 +1,8 @@
-import { renderComponent, renderSnippet } from "$lib/components/ui/data-table";
 import type { ColumnDef } from "@tanstack/table-core";
-import { createRawSnippet } from "svelte";
+import { renderComponent } from "$lib/components/ui/data-table";
 import DataTableActions from "./data-table-actions.svelte";
 import DataTableHeaderButton from "./data-table-header-button.svelte";
+import LinkCell from "./link-cell.svelte";
 
 export type Tab = {
 	song: string;
@@ -39,18 +39,9 @@ export const columns: ColumnDef<Tab>[] = [
 	{
 		accessorKey: "link",
 		header: "Link",
-		cell: ({ row }) => {
-			const linkCellSnippet = createRawSnippet<[{ link: string }]>((getLink) => {
-				const { link } = getLink();
-				return {
-					render: () =>
-						`<a href=${link} target="_blank" class="underline underline-offset-4">${link}</a>`
-				};
-			});
-
-			return renderSnippet(linkCellSnippet, {
-				link: row.original.link
-			});
+    cell: ({ cell }) => {
+      const link = cell.getValue() as string
+      return renderComponent(LinkCell, { link })
 		}
 	},
 	{

@@ -90,6 +90,7 @@
 						<Input {...props} required bind:value={$updateForm.song} />
 					{/snippet}
 				</Form.Control>
+				<Form.FieldErrors />
 			</Form.Field>
 			<div class="mt-4 mb-2 flex gap-3">
 				<Form.Field {form} name="artist">
@@ -99,20 +100,23 @@
 							<Input {...props} bind:value={$updateForm.artist} class="w-50" />
 						{/snippet}
 					</Form.Control>
+					<Form.FieldErrors />
 				</Form.Field>
 				<Form.Field {form} name="tuning">
 					<Form.Control>
 						{@render selectComp()}
 					</Form.Control>
+					<Form.FieldErrors />
 				</Form.Field>
 			</div>
 			<Form.Field {form} name="link">
 				<Form.Control>
 					{#snippet children({ props })}
 						<Form.Label>Link</Form.Label>
-						<Input {...props} bind:value={$updateForm.link} />
+						<Input {...props} type="url" bind:value={$updateForm.link} />
 					{/snippet}
 				</Form.Control>
+				<Form.FieldErrors />
 			</Form.Field>
 			<Dialog.Footer>
 				<Dialog.Close type="button" class={buttonVariants({ variant: "outline" })}>

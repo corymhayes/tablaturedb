@@ -13,7 +13,7 @@ import {
 	editTuningSchema
 } from "$lib/schema";
 import { insertTab, insertTuning } from "$lib/server/db/queries/insert";
-import { selectTab, selectTuning, selectUniqueTuning } from "$lib/server/db/queries/select";
+import { selectTab, selectTabById, selectTuning, selectUniqueTuning } from "$lib/server/db/queries/select";
 import { updateTab, updateTuning } from "$lib/server/db/queries/update";
 import { deleteTab, deleteTuning } from "$lib/server/db/queries/delete";
 
@@ -80,7 +80,12 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		try {
+    try {
+      const exisiting = await selectTabById(form.data.id, locals.user.id)
+      if (exisiting.length === 0) {
+        return fail(404, { form });
+      }
+
 			await updateTab(form.data.id, {
 				song: form.data.song,
 				artist: form.data.artist,
@@ -94,14 +99,18 @@ export const actions: Actions = {
 
 		return { form };
 	},
-	deleteTab: async ({ request }) => {
+	deleteTab: async ({ request, locals }) => {
 		const form = await superValidate(request, zod4(deleteTabSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		try {
+    try {
+      const exisiting = await selectTabById(form.data.id, locals.user.id)
+      if (exisiting.length === 0) {
+        return fail(404, { form });
+      }
 			await deleteTab(form.data.id);
 		} catch (error) {
 			return fail(500, { form });

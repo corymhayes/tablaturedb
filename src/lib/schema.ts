@@ -22,7 +22,7 @@ export const addTabSchema = z.object({
 	song: z.string(),
 	artist: z.string(),
 	tuning: z.string(),
-	link: z.url()
+  link: z.url({ protocol: /^https?$/ }).max(2048).normalize()
 });
 
 export const updateTabSchema = z.object({
@@ -30,7 +30,7 @@ export const updateTabSchema = z.object({
 	song: z.string(),
 	artist: z.string(),
 	tuning: z.string(),
-	link: z.url()
+	link: z.url({ protocol: /^https?$/ }).max(2048).normalize()
 });
 
 export const deleteTabSchema = z.object({

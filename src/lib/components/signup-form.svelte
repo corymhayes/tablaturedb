@@ -79,8 +79,8 @@
 		<Card.Description>Use your email to sign up for an account</Card.Description>
 	</Card.Header>
 	<Card.Content>
-		<!-- <form method="post" action="?/signup" class="flex flex-col gap-4" use:enhance> -->
-		<form>
+		<form method="post" action="?/signup" class="flex flex-col gap-4" use:enhance>
+		<!-- <form> -->
 			<div class="flex flex-row gap-4">
 				<Form.Field {form} name="firstName">
 					<Form.Control>
@@ -157,14 +157,14 @@
 		<Field.Set>
 			<Field.Group class="flex flex-row gap-4">
 				<Field.Field>
-					<!-- <Button variant="outline" class="h-8" onclick={googleLogin} disabled={loading}> -->
-					<Button variant="outline" class="h-8" disabled={loading}>
+					<Button variant="outline" class="h-8" onclick={googleLogin} disabled={loading}>
+					<!-- <Button variant="outline" class="h-8" disabled={loading}> -->
 						<img src="google.svg" alt="Google icon" class="mr-1 size-3.5" />
 					</Button>
 				</Field.Field>
 				<Field.Field>
-					<!-- <Button variant="outline" class="h-8" onclick={githubLogin} disabled={loading}> -->
-					<Button variant="outline" class="h-8" disabled={loading}>
+					<Button variant="outline" class="h-8" onclick={githubLogin} disabled={loading}>
+					<!-- <Button variant="outline" class="h-8" disabled={loading}> -->
 						<img src="github.svg" alt="Github icon" class="mr-1 size-3.5" />
 					</Button>
 				</Field.Field>

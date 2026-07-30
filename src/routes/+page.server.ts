@@ -65,11 +65,11 @@ export const actions = {
 				password: form.data.password
 			},
 			asResponse: true
-		});
+    });
 
 		if (response.status !== 200) {
 			const errorBody = await response.json().catch(() => {});
-			return message(form, errorBody?.error?.message || "Login failed", {
+			return message(form, errorBody?.error?.message || "User/password not found", {
 				status: response.status as 400 | 401 | 403 | 404 | 500
 			});
 		}

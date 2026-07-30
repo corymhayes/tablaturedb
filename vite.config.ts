@@ -1,3 +1,4 @@
+import { sentrySvelteKit } from "@sentry/sveltekit";
 import tailwindcss from "@tailwindcss/vite";
 import adapter from "@sveltejs/adapter-node";
 import { sveltekit } from "@sveltejs/kit/vite";
@@ -11,6 +12,10 @@ export default defineConfig({
 		}
 	},
 	plugins: [
+		sentrySvelteKit({
+			org: "cory-hayes",
+			project: "javascript-sveltekit"
+		}),
 		tailwindcss(),
 		sveltekit({
 			alias: {

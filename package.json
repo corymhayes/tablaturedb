@@ -57,6 +57,7 @@
 	},
 	"dependencies": {
 		"@neondatabase/neon-js": "0.6.2-beta",
+		"@sentry/sveltekit": "^10.69.0",
 		"better-auth": "^1.6.19",
 		"formsnap": "^2.0.1",
 		"mode-watcher": "^1.1.0",

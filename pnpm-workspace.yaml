@@ -1,6 +1,7 @@
 packages:
   - "."
 allowBuilds:
+  "@sentry/cli": false
   "@tailwindcss/oxide": true
   core-js: false
   esbuild: true

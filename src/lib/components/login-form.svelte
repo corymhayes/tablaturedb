@@ -49,31 +49,29 @@
 	const { form: formData, enhance } = form;
 
 	const googleLogin = async () => {
-		loading = true;
-		const data = await authClient.signIn.social({
-			provider: "google"
-		});
+  	loading = true;
+  	toast.info("Continuing with Google...")
+  	const data = await authClient.signIn.social({
+  		provider: "google"
+  	});
 
-		if (!data.error) {
-			toast.success("Login successful");
-		} else {
-			toast.error(data.error.message!);
-		}
-		loading = false;
+  	if (data.error) {
+  		toast.error(data.error.message ?? "Failed to redirect");
+  		loading = false;
+  	}
 	};
 
 	const githubLogin = async () => {
 		loading = true;
+		toast.info("Continuing with GitHub...")
 		const data = await authClient.signIn.social({
 			provider: "github"
 		});
 
-		if (!data.error) {
-			toast.success("Login successful");
-		} else {
-			toast.error(data.error.message!);
+		if (data.error) {
+			toast.error(data.error.message ?? "Failed to redirect");
+			loading = false;
 		}
-		loading = false;
 	};
 </script>
 
@@ -120,12 +118,12 @@
 			<Field.Group class="flex flex-row gap-4">
 				<Field.Field>
 					<Button variant="outline" class="h-8" onclick={googleLogin} disabled={loading}>
-						<img src="google.svg" alt="Google icon" class="mr-1 size-3.5" />
+						<img src="google.svg" alt="Google icon" class="mr-1 size-3.5 dark:invert" />
 					</Button>
 				</Field.Field>
 				<Field.Field>
 					<Button variant="outline" class="h-8" onclick={githubLogin} disabled={loading}>
-						<img src="github.svg" alt="Github icon" class="mr-1 size-3.5" />
+						<img src="github.svg" alt="Github icon" class="mr-1 size-3.5 dark:invert" />
 					</Button>
 				</Field.Field>
 			</Field.Group>

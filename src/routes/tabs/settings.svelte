@@ -27,7 +27,7 @@
 			loading = true;
 		},
 		onResult() {
-		  loading = false
+			loading = false;
 		},
 		onUpdate({ form }) {
 			if (form.valid) {
@@ -38,7 +38,7 @@
 			if (form.valid) {
 				toast.success("Email updated");
 			}
-		},
+		}
 	});
 
 	const newPassword = superForm(password, {
@@ -47,7 +47,7 @@
 			loading = true;
 		},
 		onResult() {
-		  loading = false
+			loading = false;
 		},
 		onUpdate({ form }) {
 			if (form.valid) {
@@ -67,7 +67,7 @@
 			}
 		},
 		onResult() {
-		  loading = false
+			loading = false;
 		},
 		onUpdate({ form }) {
 			if (form.valid) {
@@ -89,7 +89,7 @@
 	let showEditTuning = $state(false);
 	let tuningId = $state("");
 	let selectedTuning: SelectTuning | null = $state(null);
-  let loading = $state(false);
+	let loading = $state(false);
 
 	const closeTuningDelete = () => (showDeleteTuning = false);
 	const closeTuningEdit = () => (showEditTuning = false);

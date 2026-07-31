@@ -26,6 +26,8 @@
 
 	let initials = $derived.by(() => {
 		let names = data.user?.name.split(" ");
+		if (names?.length === 0) return "";
+		if (names?.length === 1) return `${names[0][0]}`;
 		return `${names[0][0]}${names[1][0]}`;
 	});
 

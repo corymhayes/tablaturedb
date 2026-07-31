@@ -39,9 +39,9 @@ export const columns: ColumnDef<Tab>[] = [
 	{
 		accessorKey: "link",
 		header: "Link",
-    cell: ({ cell }) => {
-      const link = cell.getValue() as string
-      return renderComponent(LinkCell, { link })
+		cell: ({ cell }) => {
+			const link = cell.getValue() as string;
+			return renderComponent(LinkCell, { link });
 		}
 	},
 	{

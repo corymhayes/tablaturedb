@@ -44,7 +44,7 @@
 			},
 			onUpdated({ form: _form }) {
 				if (_form.valid) {
-				  form.reset();
+					form.reset();
 					closeAddDialog();
 					toast.success("Tab added successfully");
 				}

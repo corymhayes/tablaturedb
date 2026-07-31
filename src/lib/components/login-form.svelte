@@ -7,6 +7,7 @@
 	import { Input } from "$lib/components/ui/input";
 	import { Spinner } from "$lib/components/ui/spinner";
 	import { toast } from "svelte-sonner";
+	import * as Sentry from "@sentry/sveltekit";
 
 	import { loginSchema, type ForgotPasswordSchema, type LoginSchema } from "$lib/schema";
 	import { type SuperValidated, type Infer, superForm } from "sveltekit-superforms";
@@ -49,26 +50,28 @@
 	const { form: formData, enhance } = form;
 
 	const googleLogin = async () => {
-  	loading = true;
-  	toast.info("Continuing with Google...")
-  	const data = await authClient.signIn.social({
-  		provider: "google"
-  	});
+		loading = true;
+		toast.info("Continuing with Google...");
+		const data = await authClient.signIn.social({
+			provider: "google"
+		});
 
-  	if (data.error) {
-  		toast.error(data.error.message ?? "Failed to redirect");
-  		loading = false;
-  	}
+		if (data.error) {
+			Sentry.captureException(data.error);
+			toast.error(data.error.message ?? "Failed to redirect");
+			loading = false;
+		}
 	};
 
 	const githubLogin = async () => {
 		loading = true;
-		toast.info("Continuing with GitHub...")
+		toast.info("Continuing with GitHub...");
 		const data = await authClient.signIn.social({
 			provider: "github"
 		});
 
 		if (data.error) {
+			Sentry.captureException(data.error);
 			toast.error(data.error.message ?? "Failed to redirect");
 			loading = false;
 		}

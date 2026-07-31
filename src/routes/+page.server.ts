@@ -65,7 +65,7 @@ export const actions = {
 				password: form.data.password
 			},
 			asResponse: true
-    });
+		});
 
 		if (response.status !== 200) {
 			const errorBody = await response.json().catch(() => {});

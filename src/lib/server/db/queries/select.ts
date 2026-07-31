@@ -20,10 +20,10 @@ export const selectTab = async (userId: SelectTab["userId"]) => {
 };
 
 export const selectTabById = async (id: SelectTab["id"], userId: SelectTab["userId"]) => {
-    return db
-        .select()
-        .from(tablatures)
-        .where(and(eq(tablatures.id, id), eq(tablatures.userId, userId)));
+	return db
+		.select()
+		.from(tablatures)
+		.where(and(eq(tablatures.id, id), eq(tablatures.userId, userId)));
 };
 
 export const selectTuning = async (userId: SelectTuning["userId"]) => {

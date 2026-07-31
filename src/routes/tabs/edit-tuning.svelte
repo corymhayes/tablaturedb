@@ -25,7 +25,7 @@
 		},
 		onUpdated({ form: _form }) {
 			if (_form.valid) {
-			  form.reset();
+				form.reset();
 				open = false;
 				toast.success("Tuning updated");
 			}

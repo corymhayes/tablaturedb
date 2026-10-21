@@ -64,6 +64,10 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
+		}
+
 		try {
 			await insertTab({
 				song: form.data.song,
@@ -85,19 +89,27 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
+		}
+
 		try {
 			const exisiting = await selectTabById(form.data.id, locals.user.id);
 			if (exisiting.length === 0) {
 				return fail(404, { form });
 			}
 
-			await updateTab(form.data.id, {
+			const result = await updateTab(form.data.id, locals.user.id, {
 				song: form.data.song,
 				artist: form.data.artist,
 				tuningId: form.data.tuning,
 				link: form.data.link,
 				userId: locals.user.id
 			});
+
+			if (result.length === 0) {
+				return fail(403, { form, message: "You cannot edit this tab" });
+			}
 		} catch (error) {
 			return fail(500, { form });
 		}
@@ -111,12 +123,20 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
+		}
+
 		try {
 			const exisiting = await selectTabById(form.data.id, locals.user.id);
 			if (exisiting.length === 0) {
 				return fail(404, { form });
 			}
-			await deleteTab(form.data.id);
+			const result = await deleteTab(form.data.id, locals.user.id);
+
+			if (result.length === 0) {
+				return fail(403, { form, message: "You cannot delete this tab" });
+			}
 		} catch (error) {
 			return fail(500, { form });
 		}
@@ -128,6 +148,10 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return fail(400, { form });
+		}
+
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
 		}
 
 		const existing = await selectUniqueTuning(locals.user.id, form.data.tuning);
@@ -154,17 +178,24 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
+		if (!locals.user) {
+			return fail(401, { form, message: "Unauthorized" });
+		}
+
 		const { id, name } = form.data;
 
 		try {
-			await updateTuning(id, { name });
+			const result = await updateTuning(id, locals.user.id, { name });
+			if (result.length === 0) {
+				return fail(403, { form, message: "You cannot edit this tuning" });
+			}
 		} catch (error) {
 			return fail(500, { form });
 		}
 
 		return { form };
 	},
-	deleteTuning: async ({ request }) => {
+	deleteTuning: async ({ request, locals }) => {
 		const data = await request.formData();
 		const id = data.get("id");
 
@@ -172,8 +203,15 @@ export const actions: Actions = {
 			return fail(400, { message: "Invalid tuning id" });
 		}
 
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
+		}
+
 		try {
-			await deleteTuning(id);
+			const result = await deleteTuning(id, locals.user.id);
+			if (result.length === 0) {
+				return fail(403, { message: "You cannot delete this tuning" });
+			}
 		} catch (error) {
 			return fail(500, { message: "Failed to delete tuning" });
 		}
@@ -185,6 +223,10 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return fail(400, { form });
+		}
+
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
 		}
 
 		const verified = await auth.api.verifyPassword({
@@ -214,6 +256,10 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return fail(400, { form });
+		}
+
+		if (!locals.user) {
+			return fail(401, { message: "Unauthorized" });
 		}
 
 		try {

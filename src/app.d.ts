@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: {
+			user?: {
 				id: string;
 				name: string;
 				email: string;
@@ -13,7 +13,7 @@ declare global {
 				createdAt: Date;
 				updatedAt: Date;
 			};
-			session: {
+			session?: {
 				id: string;
 				expiresAt: Date;
 				token: string;

@@ -53,15 +53,15 @@
 			form.reset({
 				data: {
 					song: tab.song,
-					artist: tab.artist,
-					tuning: tuningId,
-					link: tab.link
+					artist: tab.artist ?? "",
+					tuning: tuningId ?? "",
+					link: tab.link ?? ""
 				},
 				newState: {
 					song: tab.song,
-					artist: tab.artist,
-					tuning: tuningId,
-					link: tab.link
+					artist: tab.artist ?? "",
+					tuning: tuningId ?? "",
+					link: tab.link ?? ""
 				}
 			});
 			value = tuningId;

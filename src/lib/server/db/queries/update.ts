@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import { db } from "../";
+import type { Database } from "../";
 import {
 	type InsertTab,
 	type InsertTuning,
@@ -10,6 +10,7 @@ import {
 } from "../schema";
 
 export const updateTab = async (
+	db: Database,
 	id: SelectTab["id"],
 	userId: SelectTab["userId"],
 	tab: InsertTab
@@ -22,6 +23,7 @@ export const updateTab = async (
 };
 
 export const updateTuning = async (
+	db: Database,
 	id: SelectTuning["id"],
 	userId: NonNullable<SelectTuning["userId"]>,
 	tuning: InsertTuning

@@ -21,6 +21,7 @@ import {
 } from "$lib/server/db/queries/select";
 import { updateTab, updateTuning } from "$lib/server/db/queries/update";
 import { deleteTab, deleteTuning } from "$lib/server/db/queries/delete";
+import { db } from "$lib/server/db";
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) {
@@ -33,8 +34,8 @@ export const load: PageServerLoad = async (event) => {
 	const newPassword = await superValidate(zod4(changePasswordSchema));
 	const addTuningForm = await superValidate(zod4(addTuningSchema));
 	const editTuningForm = await superValidate(zod4(editTuningSchema));
-	const tabs = await selectTab(event.locals.user.id);
-	const tunings = await selectTuning(event.locals.user.id);
+	const tabs = await selectTab(db, event.locals.user.id);
+	const tunings = await selectTuning(db, event.locals.user.id);
 
 	return {
 		user: event.locals.user,
@@ -69,7 +70,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			await insertTab({
+			await insertTab(db, {
 				song: form.data.song,
 				artist: form.data.artist,
 				tuningId: form.data.tuning,
@@ -94,12 +95,12 @@ export const actions: Actions = {
 		}
 
 		try {
-			const exisiting = await selectTabById(form.data.id, locals.user.id);
-			if (exisiting.length === 0) {
+			const existing = await selectTabById(db, form.data.id, locals.user.id);
+			if (existing.length === 0) {
 				return fail(404, { form });
 			}
 
-			const result = await updateTab(form.data.id, locals.user.id, {
+			const result = await updateTab(db, form.data.id, locals.user.id, {
 				song: form.data.song,
 				artist: form.data.artist,
 				tuningId: form.data.tuning,
@@ -128,11 +129,11 @@ export const actions: Actions = {
 		}
 
 		try {
-			const exisiting = await selectTabById(form.data.id, locals.user.id);
+			const exisiting = await selectTabById(db, form.data.id, locals.user.id);
 			if (exisiting.length === 0) {
 				return fail(404, { form });
 			}
-			const result = await deleteTab(form.data.id, locals.user.id);
+			const result = await deleteTab(db, form.data.id, locals.user.id);
 
 			if (result.length === 0) {
 				return fail(403, { form, message: "You cannot delete this tab" });
@@ -154,14 +155,14 @@ export const actions: Actions = {
 			return fail(401, { message: "Unauthorized" });
 		}
 
-		const existing = await selectUniqueTuning(locals.user.id, form.data.tuning);
+		const existing = await selectUniqueTuning(db, locals.user.id, form.data.tuning);
 
 		if (existing.length > 0) {
 			return error(409, "Tuning already exists");
 		}
 
 		try {
-			const result = await insertTuning({
+			const result = await insertTuning(db, {
 				name: form.data.tuning,
 				userId: locals.user.id
 			});
@@ -185,7 +186,7 @@ export const actions: Actions = {
 		const { id, name } = form.data;
 
 		try {
-			const result = await updateTuning(id, locals.user.id, { name });
+			const result = await updateTuning(db, id, locals.user.id, { name });
 			if (result.length === 0) {
 				return fail(403, { form, message: "You cannot edit this tuning" });
 			}
@@ -208,7 +209,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const result = await deleteTuning(id, locals.user.id);
+			const result = await deleteTuning(db, id, locals.user.id);
 			if (result.length === 0) {
 				return fail(403, { message: "You cannot delete this tuning" });
 			}

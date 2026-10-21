@@ -17,4 +17,5 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 
 	return svelteKitHandler({ event, resolve, auth, building });
 });
+
 export const handleError = Sentry.handleErrorWithSentry();

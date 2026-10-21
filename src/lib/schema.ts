@@ -1,5 +1,20 @@
 import { z } from "zod";
 
+const optionalUrl = z.preprocess(
+	(value) => {
+		if (typeof value === "string" && value.trim() === "") {
+			return null;
+		}
+
+		return value;
+	},
+	z
+		.url({ protocol: /^https?$/ })
+		.max(2048)
+		.normalize()
+		.nullable()
+);
+
 export const loginSchema = z.object({
 	email: z.email(),
 	password: z.string().min(8, "Password must be at least 8 characters")
@@ -7,8 +22,8 @@ export const loginSchema = z.object({
 
 export const signupSchema = z
 	.object({
-		firstName: z.string().max(50),
-		lastName: z.string().max(50),
+		firstName: z.string().trim().min(1, "First name is required"),
+		lastName: z.string().trim().min(1, "Last name is required"),
 		email: z.email(),
 		password: z.string().min(8, "Password must be at least 8 characters"),
 		confirmPassword: z.string().min(8, "Password must be at least 8 characters")
@@ -19,24 +34,38 @@ export const signupSchema = z
 	});
 
 export const addTabSchema = z.object({
-	song: z.string(),
-	artist: z.string(),
-	tuning: z.string(),
-	link: z
-		.url({ protocol: /^https?$/ })
-		.max(2048)
-		.normalize()
+	song: z.string().trim().min(1, "Song is required"),
+	artist: z
+		.string()
+		.trim()
+		.max(255)
+		.transform((value) => value || null)
+		.optional(),
+	tuning: z
+		.string()
+		.trim()
+		.max(255)
+		.transform((value) => value || null)
+		.optional(),
+	link: optionalUrl
 });
 
 export const updateTabSchema = z.object({
 	id: z.string(),
-	song: z.string(),
-	artist: z.string(),
-	tuning: z.string(),
-	link: z
-		.url({ protocol: /^https?$/ })
-		.max(2048)
-		.normalize()
+	song: z.string().trim().min(1, "Song is required"),
+	artist: z
+		.string()
+		.trim()
+		.max(255)
+		.transform((value) => value || null)
+		.optional(),
+	tuning: z
+		.string()
+		.trim()
+		.max(255)
+		.transform((value) => value || null)
+		.optional(),
+	link: optionalUrl
 });
 
 export const deleteTabSchema = z.object({
@@ -74,12 +103,12 @@ export const changePasswordSchema = z
 	});
 
 export const addTuningSchema = z.object({
-	tuning: z.string().max(50)
+	tuning: z.string().trim().min(1, "Tuning is required").max(50)
 });
 
 export const editTuningSchema = z.object({
 	id: z.string(),
-	name: z.string().max(50)
+	name: z.string().trim().min(1, "Tuning name is required").max(50)
 });
 
 export type LoginSchema = typeof loginSchema;

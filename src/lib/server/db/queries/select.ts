@@ -1,8 +1,8 @@
 import { and, asc, eq, isNull, or } from "drizzle-orm";
-import { db } from "../";
+import { db, type Database } from "../";
 import { type SelectTab, type SelectTuning, tablatures, tunings } from "../schema";
 
-export const selectTab = async (userId: SelectTab["userId"]) => {
+export const selectTab = async (db: Database, userId: SelectTab["userId"]) => {
 	return db
 		.select({
 			id: tablatures.id,
@@ -19,14 +19,18 @@ export const selectTab = async (userId: SelectTab["userId"]) => {
 		.orderBy(asc(tablatures.artist), asc(tablatures.song));
 };
 
-export const selectTabById = async (id: SelectTab["id"], userId: SelectTab["userId"]) => {
+export const selectTabById = async (
+	db: Database,
+	id: SelectTab["id"],
+	userId: SelectTab["userId"]
+) => {
 	return db
 		.select()
 		.from(tablatures)
 		.where(and(eq(tablatures.id, id), eq(tablatures.userId, userId)));
 };
 
-export const selectTuning = async (userId: SelectTuning["userId"]) => {
+export const selectTuning = async (db: Database, userId: SelectTuning["userId"]) => {
 	return db
 		.select()
 		.from(tunings)
@@ -35,6 +39,7 @@ export const selectTuning = async (userId: SelectTuning["userId"]) => {
 };
 
 export const selectUniqueTuning = async (
+	db: Database,
 	userId: SelectTuning["userId"],
 	name: SelectTuning["name"]
 ) => {

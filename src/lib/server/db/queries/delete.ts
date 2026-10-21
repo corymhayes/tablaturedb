@@ -1,8 +1,12 @@
 import { and, eq } from "drizzle-orm";
-import { db } from "../";
+import type { Database } from "../";
 import { type SelectTab, type SelectTuning, tablatures, tunings } from "../schema";
 
-export const deleteTab = async (id: SelectTab["id"], userId: NonNullable<SelectTab["userId"]>) => {
+export const deleteTab = async (
+	db: Database,
+	id: SelectTab["id"],
+	userId: NonNullable<SelectTab["userId"]>
+) => {
 	return db
 		.delete(tablatures)
 		.where(and(eq(tablatures.id, id), eq(tablatures.userId, userId)))
@@ -10,6 +14,7 @@ export const deleteTab = async (id: SelectTab["id"], userId: NonNullable<SelectT
 };
 
 export const deleteTuning = async (
+	db: Database,
 	id: SelectTuning["id"],
 	userId: NonNullable<SelectTuning["userId"]>
 ) => {

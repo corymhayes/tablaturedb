@@ -84,13 +84,11 @@ export const tunings = pgTable("tunings", {
 export const tablatures = pgTable("tablatures", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	song: varchar("song", { length: 255 }).notNull(),
-	artist: varchar("artist", { length: 255 }).notNull(),
-	tuningId: uuid("tuning_id")
-		.references(() => tunings.id, {
-			onDelete: "restrict"
-		})
-		.notNull(),
-	link: text("link").notNull(),
+	artist: varchar("artist", { length: 255 }),
+	tuningId: uuid("tuning_id").references(() => tunings.id, {
+		onDelete: "restrict"
+	}),
+	link: text("link"),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	userId: text("user_id").notNull()
 });

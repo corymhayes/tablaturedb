@@ -5,10 +5,11 @@ import DataTableHeaderButton from "./data-table-header-button.svelte";
 import LinkCell from "./link-cell.svelte";
 
 export type Tab = {
+	id: string;
 	song: string;
-	artist: string;
-	tuning: string;
-	link: string;
+	artist: string | null;
+	tuning: string | null;
+	link: string | null;
 };
 
 export const columns: ColumnDef<Tab>[] = [
@@ -26,7 +27,10 @@ export const columns: ColumnDef<Tab>[] = [
 			renderComponent(DataTableHeaderButton, {
 				header: "Artist",
 				column
-			})
+			}),
+		cell: ({ cell }) => {
+			return cell.getValue() ?? "";
+		}
 	},
 	{
 		accessorKey: "tuning",
@@ -34,13 +38,16 @@ export const columns: ColumnDef<Tab>[] = [
 			renderComponent(DataTableHeaderButton, {
 				header: "Tuning",
 				column
-			})
+			}),
+		cell: ({ cell }) => {
+			return cell.getValue() ?? "";
+		}
 	},
 	{
 		accessorKey: "link",
 		header: "Link",
 		cell: ({ cell }) => {
-			const link = cell.getValue() as string;
+			const link = cell.getValue() as string | null;
 			return renderComponent(LinkCell, { link });
 		}
 	},

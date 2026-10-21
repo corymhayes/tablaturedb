@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/sveltekit";
+import { PUBLIC_APP_ENV } from "$env/static/public";
 
 // If you don't want to use Session Replay, remove the `Replay` integration,
 // `replaysSessionSampleRate` and `replaysOnErrorSampleRate` options.
@@ -7,8 +8,15 @@ Sentry.init({
 	tracesSampleRate: 1,
 	replaysSessionSampleRate: 0.1,
 	replaysOnErrorSampleRate: 1,
-	integrations: [Sentry.replayIntegration()],
+	integrations: [
+		Sentry.replayIntegration({
+			maskAllText: true,
+			maskAllInputs: true,
+			blockAllMedia: true
+		})
+	],
 	enableLogs: true,
+	environment: PUBLIC_APP_ENV,
 	dataCollection: {
 		// To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
 		// https://docs.sentry.io/platforms/javascript/guides/sveltekit/configuration/options/#dataCollection

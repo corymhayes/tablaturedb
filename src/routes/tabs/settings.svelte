@@ -19,7 +19,24 @@
 	import type { SelectTuning } from "$lib/server/db/schema";
 	import { Spinner } from "$lib/components/ui/spinner";
 
-	let { showSettings, closeSettings, email, password, addTuning, tunings } = $props();
+	type Tuning = {
+		id: string;
+		name: string;
+		userId: string | null;
+		createdAt: Date;
+	};
+
+	type SettingsProps = {
+		showSettings: boolean;
+		closeSettings: () => void;
+		email: any;
+		password: any;
+		addTuning: any;
+		tunings: Tuning[];
+	};
+
+	let { showSettings, closeSettings, email, password, addTuning, tunings }: SettingsProps =
+		$props();
 
 	const changeEmail = superForm(email, {
 		validators: zod4Client(changeEmailSchema),
@@ -305,7 +322,7 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-{#snippet tuningMenu(tuning)}
+{#snippet tuningMenu(tuning: Tuning)}
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			<EllipsisVertical size={14} />

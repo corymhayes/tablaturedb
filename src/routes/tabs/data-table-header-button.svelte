@@ -8,7 +8,7 @@
 
 <Button
 	variant="ghost"
-	class="p-0 text-base font-bold"
+	class="p-0 font-mono uppercase text-[16px]"
 	onclick={column.getToggleSortingHandler()}
 	{...restProps}
 >

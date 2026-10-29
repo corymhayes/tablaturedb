@@ -11,7 +11,20 @@
 
 <AlertDialog.Root bind:open>
 	<AlertDialog.Trigger>
-		<Trash size={16} />
+		<!-- <Trash size={16} class="cursor-pointer hover:text-primary" /> -->
+		<span class="group relative block size-4 cursor-pointer">
+			<img
+				src="/trash-simple-fill.svg"
+				alt="Edit tab"
+				class="absolute inset-0 size-full opacity-100 transition-opacity duration-250 ease-in-out group-hover:opacity-0"
+			/>
+			<img
+				src="/trash-simple-fill-hover.svg"
+				alt=""
+				aria-hidden="true"
+				class="absolute inset-0 size-full opacity-0 transition-opacity duration-250 ease-in-out group-hover:opacity-100"
+			/>
+		</span>
 	</AlertDialog.Trigger>
 	<AlertDialog.Content>
 		<AlertDialog.Header>

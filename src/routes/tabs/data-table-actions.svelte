@@ -5,7 +5,7 @@
 	let { id, tab } = $props();
 </script>
 
-<div class="flex items-center justify-end gap-3 pr-4">
+<div class="flex items-center justify-end gap-3">
 	<EditTab {tab} />
 	<DeleteTab {id} song={tab.song} />
 </div>

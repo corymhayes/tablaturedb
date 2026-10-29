@@ -14,15 +14,17 @@
 </script>
 
 <AlertDialog.Root bind:open={showLogOutAlert} onOpenChange={() => closeLogOutAlert()}>
-	<AlertDialog.Content>
+	<AlertDialog.Content class="bg-[#0a0a0a] border-[#c8c8c8]">
 		<AlertDialog.Header>
-			<AlertDialog.Title>Log out</AlertDialog.Title>
-			<AlertDialog.Description>Are you sure you want to log out?</AlertDialog.Description>
+			<AlertDialog.Title class="font-mono uppercase tracking-wider">Log out</AlertDialog.Title>
+			<AlertDialog.Description class="font-mono font-light"
+				>Are you sure you want to log out?</AlertDialog.Description
+			>
 		</AlertDialog.Header>
-		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+		<AlertDialog.Footer class="font-mono">
+			<AlertDialog.Cancel class="h-8">Cancel</AlertDialog.Cancel>
 			<form method="POST" action="?/signOut" onsubmit={() => (loading = true)} use:enhance>
-				<AlertDialog.Action type="submit" disabled={loading}>
+				<AlertDialog.Action type="submit" disabled={loading} class="h-8">
 					{#if loading}
 						<Spinner />
 					{:else}

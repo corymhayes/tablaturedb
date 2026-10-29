@@ -46,9 +46,12 @@
 	<Table.Root>
 		<Table.Header>
 			{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-				<Table.Row class="h-14 text-base font-bold">
+				<Table.Row class="h-14">
 					{#each headerGroup.headers as header (header.id)}
-						<Table.Head colspan={header.colSpan} class="first:pl-6">
+						<Table.Head
+							colspan={header.colSpan}
+							class="font-mono font-medium uppercase text-[16px]"
+						>
 							{#if !header.isPlaceholder}
 								<FlexRender
 									content={header.column.columnDef.header}
@@ -62,9 +65,9 @@
 		</Table.Header>
 		<Table.Body>
 			{#each table.getRowModel().rows as row (row.id)}
-				<Table.Row data-state={row.getIsSelected() && "selected"} class="h-14">
+				<Table.Row data-state={row.getIsSelected() && "selected"} class="h-14 border-0">
 					{#each row.getVisibleCells() as cell (cell.id)}
-						<Table.Cell class="text-sm first:pl-6">
+						<Table.Cell class="font-mono text-sm font-extralight">
 							<FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
 						</Table.Cell>
 					{/each}

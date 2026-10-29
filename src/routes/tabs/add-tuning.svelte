@@ -39,24 +39,30 @@
 </script>
 
 <Dialog.Root {open} {onOpenChange}>
-	<Dialog.Content>
+	<Dialog.Content class="font-mono bg-[#0a0a0a]">
 		<Dialog.Header>
-			<Dialog.Title>Add tuning</Dialog.Title>
+			<Dialog.Title class="font-mono uppercase tracking-wide">Add tuning</Dialog.Title>
 		</Dialog.Header>
 		<form method="POST" action="?/addTuning" use:enhance class="space-y-4">
 			<Form.Field {form} name="tuning">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Tuning</Form.Label>
-						<Input {...props} type="text" required bind:value={$formData.tuning} />
+						<Form.Label class="font-light ">Tuning</Form.Label>
+						<Input
+							{...props}
+							type="text"
+							required
+							bind:value={$formData.tuning}
+							class="bg-background! focus:border-primary! h-10"
+						/>
 					{/snippet}
 				</Form.Control>
 			</Form.Field>
 			<Dialog.Footer>
-				<Dialog.Close type="button" class={buttonVariants({ variant: "outline" })}>
-					Cancel
-				</Dialog.Close>
-				<Button type="submit" disabled={loading}>
+				<Dialog.Close type="button" class="h-8 px-2 border border-[#292929] rounded-lg"
+					>Cancel</Dialog.Close
+				>
+				<Button type="submit" disabled={loading} class="h-8">
 					{#if loading}
 						<Spinner />
 					{:else}

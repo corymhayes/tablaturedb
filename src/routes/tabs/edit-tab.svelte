@@ -75,34 +75,55 @@
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger>
-		<Pencil size={16} />
+		<span class="group relative block size-4 cursor-pointer">
+			<img
+				src="/pencil-simple-fill.svg"
+				alt="Edit tab"
+				class="absolute inset-0 size-full opacity-100 transition-opacity duration-250 ease-in-out group-hover:opacity-0"
+			/>
+			<img
+				src="/pencil-simple-fill-hover.svg"
+				alt=""
+				aria-hidden="true"
+				class="absolute inset-0 size-full opacity-0 transition-opacity duration-250 ease-in-out group-hover:opacity-100"
+			/>
+		</span>
 	</Dialog.Trigger>
-	<Dialog.Content class="`sm:max-w-106.25">
+	<Dialog.Content class="sm:max-w-106.25 bg-[#0a0a0a] border border-[#292929]">
 		<Dialog.Header>
-			<Dialog.Title>Edit tab</Dialog.Title>
+			<Dialog.Title class="font-mono uppercase tracking-wider">Edit tab</Dialog.Title>
 		</Dialog.Header>
-		<form method="POST" action="?/updateTab" use:updateEnhance class="space-y-4">
+		<form method="POST" action="?/updateTab" use:updateEnhance class="space-y-4 font-mono">
 			<input type="hidden" name="id" value={tab.id} />
 			<Form.Field {form} name="song">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Song</Form.Label>
-						<Input {...props} required bind:value={$updateForm.song} />
+						<Form.Label class="uppercase tracking-wider">Song</Form.Label>
+						<Input
+							{...props}
+							required
+							bind:value={$updateForm.song}
+							class="bg-background! focus:border-primary! h-10"
+						/>
 					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
 			<div class="mt-4 mb-2 flex gap-3">
-				<Form.Field {form} name="artist">
+				<Form.Field {form} name="artist" class="min-w-0 flex-1">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Artist</Form.Label>
-							<Input {...props} bind:value={$updateForm.artist} class="w-50" />
+							<Form.Label class="uppercase tracking-wider">Artist</Form.Label>
+							<Input
+								{...props}
+								bind:value={$updateForm.artist}
+								class="bg-background! focus:border-primary! h-10 w-full"
+							/>
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="tuning">
+				<Form.Field {form} name="tuning" class="min-w-0 flex-1">
 					<Form.Control>
 						{@render selectComp()}
 					</Form.Control>
@@ -112,8 +133,13 @@
 			<Form.Field {form} name="link">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Link</Form.Label>
-						<Input {...props} type="url" bind:value={$updateForm.link} />
+						<Form.Label class="uppercase tracking-wider">Link</Form.Label>
+						<Input
+							{...props}
+							type="url"
+							bind:value={$updateForm.link}
+							class="bg-background! focus:border-primary! h-10"
+						/>
 					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
@@ -135,14 +161,16 @@
 </Dialog.Root>
 
 {#snippet selectComp()}
-	<Form.Label>Tuning</Form.Label>
+	<Form.Label class="uppercase tracking-wider">Tuning</Form.Label>
 	<Select.Root type="single" name="tuning" bind:value>
-		<Select.Trigger class="w-35">
-			<BitsSelect.Value class="truncate">{triggerContent}</BitsSelect.Value>
+		<Select.Trigger class="bg-background! focus:border-primary! h-10! w-full">
+			<BitsSelect.Value class="truncate uppercase">{triggerContent}</BitsSelect.Value>
 		</Select.Trigger>
 		<Select.Content>
 			{#each tunings as tuning (tuning.id)}
-				<Select.Item value={tuning.id} class="truncate">{tuning.name}</Select.Item>
+				<Select.Item value={tuning.id} class="truncate uppercase font-mono"
+					>{tuning.name}</Select.Item
+				>
 			{/each}
 		</Select.Content>
 	</Select.Root>

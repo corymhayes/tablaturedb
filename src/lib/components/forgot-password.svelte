@@ -44,7 +44,12 @@
 </script>
 
 <Dialog.Root bind:open>
-	<button type="button" class="cursor-pointer" tabindex="-1" onclick={() => (open = true)}>
+	<button
+		type="button"
+		class="cursor-pointer text-sm font-light text-[#c8c8c8]"
+		tabindex="-1"
+		onclick={() => (open = true)}
+	>
 		Forgot password?
 	</button>
 	<Dialog.Content class="`sm:max-w-106.25">

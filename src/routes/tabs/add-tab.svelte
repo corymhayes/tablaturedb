@@ -72,31 +72,43 @@
 		form.reset();
 	}}
 >
-	<Dialog.Content class="`sm:max-w-106.25">
+	<Dialog.Content class="sm:max-w-106.25 font-mono bg-[#0a0a0a] border border-[#292929]">
 		<Dialog.Header>
-			<Dialog.Title>Add tab</Dialog.Title>
+			<Dialog.Title class="font-mono uppercase tracking-wider text-lg">Add tab</Dialog.Title>
 		</Dialog.Header>
-		<form method="POST" action="?/addTab" use:enhance class="space-y-4">
+		<form method="POST" action="?/addTab" use:enhance class="space-y-4 mt-1 font-light">
 			<Form.Field {form} name="song">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Song <span class="text-xs text-foreground/20">(required)</span></Form.Label>
-						<Input {...props} required bind:value={$formData.song} />
+						<Form.Label class="font-light text-sm">
+							Song
+							<span class="text-xs text-foreground/20">(required)</span>
+						</Form.Label>
+						<Input
+							{...props}
+							required
+							bind:value={$formData.song}
+							class="bg-background! w-sm focus:border-primary! h-10"
+						/>
 					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
 			<div class="mt-4 mb-2 flex gap-3">
-				<Form.Field {form} name="artist">
+				<Form.Field {form} name="artist" class="min-w-0 flex-1">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Artist</Form.Label>
-							<Input {...props} bind:value={$formData.artist} class="w-50" />
+							<Form.Label class="font-light text-sm">Artist</Form.Label>
+							<Input
+								{...props}
+								bind:value={$formData.artist}
+								class="bg-background! focus:border-primary! h-10 w-full"
+							/>
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="tuning">
+				<Form.Field {form} name="tuning" class="min-w-0 flex-1">
 					<Form.Control>
 						{@render selectComp()}
 					</Form.Control>
@@ -106,21 +118,30 @@
 			<Form.Field {form} name="link">
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Link</Form.Label>
-						<Input {...props} type="url" bind:value={$formData.link} />
+						<Form.Label class="font-light text-sm">Link</Form.Label>
+						<Input
+							{...props}
+							type="url"
+							bind:value={$formData.link}
+							class="bg-background! w-sm focus:border-primary! h-10"
+						/>
 					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Dialog.Footer>
-				<Dialog.Close type="button" class={buttonVariants({ variant: "outline" })}>
+				<Dialog.Close
+					type="button"
+					class={buttonVariants({ variant: "outline" })}
+					style="font-size: 0.9rem; font-weight: 300"
+				>
 					Cancel
 				</Dialog.Close>
-				<Button type="submit" disabled={loading}>
+				<Button type="submit" disabled={loading} style="font-size: 0.9rem; font-weight: 300">
 					{#if loading}
 						<Spinner />
 					{:else}
-						Save changes
+						Save
 					{/if}
 				</Button>
 			</Dialog.Footer>
@@ -129,19 +150,19 @@
 </Dialog.Root>
 
 {#snippet selectComp()}
-	<Form.Label class="flex">
+	<Form.Label class="flex font-light text-sm">
 		Tuning
 		<button type="button" onclick={() => (open = true)}>
-			<CirclePlus size={12} class="cursor-pointer text-primary" />
+			<CirclePlus size={14} class="cursor-pointer text-primary" />
 		</button>
 	</Form.Label>
 	<Select.Root type="single" name="tuning" bind:value>
-		<Select.Trigger class="w-35">
+		<Select.Trigger class="bg-background! focus:border-primary! h-10! w-full">
 			<BitsSelect.Value class="truncate">{triggerContent}</BitsSelect.Value>
 		</Select.Trigger>
-		<Select.Content>
+		<Select.Content class="bg-[#0a0a0a]">
 			{#each tunings as tuning (tuning.id)}
-				<Select.Item value={tuning.id} class="truncate">{tuning.name}</Select.Item>
+				<Select.Item value={tuning.id} class="truncate font-mono">{tuning.name}</Select.Item>
 			{/each}
 		</Select.Content>
 	</Select.Root>

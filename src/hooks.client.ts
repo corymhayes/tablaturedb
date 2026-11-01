@@ -16,6 +16,7 @@ Sentry.init({
 		})
 	],
 	enableLogs: true,
+	enabled: PUBLIC_APP_ENV === "production",
 	environment: PUBLIC_APP_ENV,
 	dataCollection: {
 		// To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:

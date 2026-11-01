@@ -7,7 +7,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+.light {
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.147 0.004 49.25);
 	--card: oklch(1 0 0);
@@ -42,10 +42,10 @@
 	--sidebar-ring: oklch(0.709 0.01 56.259);
 }
 
-.dark {
+:root {
 	/*--background: oklch(0.147 0.004 49.25);*/
 	--background: oklch(0.1448 0 0);
-	--foreground: oklch(0.985 0.001 106.423);
+	--foreground: oklch(0.9612 0 0);
 	--card: oklch(0.216 0.006 56.043);
 	--card-foreground: oklch(0.985 0.001 106.423);
 	--popover: oklch(0.216 0.006 56.043);
@@ -53,15 +53,19 @@
 	/*--primary: oklch(0.47 0.157 37.304);*/
 	--primary: oklch(0.691 0.182 45.81);
 	--primary-foreground: oklch(0.98 0.016 73.684);
-	--secondary: oklch(0.274 0.006 286.033);
+	--secondary: oklch(0.1448 0 0);
 	--secondary-foreground: oklch(0.985 0 0);
 	--muted: oklch(0.268 0.007 34.298);
-	--muted-foreground: oklch(0.709 0.01 56.259);
+	/*--muted-foreground: oklch(0.709 0.01 56.259);*/
+	--muted-foreground: oklch(0.3211 0 0);
 	/*--accent: oklch(0.47 0.157 37.304);*/
-	--accent: oklch(0.691 0.182 45.81);
+	/*--accent: oklch(0.691 0.182 45.81);*/
+	--accent: oklch(0.227 0.0324 54.84);
 	--accent-foreground: oklch(0.98 0.016 73.684);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
+	/*--destructive: oklch(0.704 0.191 22.216);*/
+	--destructive-background: oklch(0.2027 0.0455 21.95);
+	--destructive-foreground: oklch(0.6274 0.1796 28.47);
+	--border: oklch(0.3211 0 0);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
 	--chart-1: oklch(0.837 0.128 66.29);
@@ -100,7 +104,9 @@
 	--color-ring: var(--ring);
 	--color-input: var(--input);
 	--color-border: var(--border);
-	--color-destructive: var(--destructive);
+	/*--color-destructive: var(--destructive);*/
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-destructive-background: var(--destructive-background);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-accent: var(--accent);
 	--color-muted-foreground: var(--muted-foreground);

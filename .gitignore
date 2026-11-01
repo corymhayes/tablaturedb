@@ -32,3 +32,4 @@ vite.config.ts.timestamp-*
 /src/routes/dashboard-test
 /src/routes/form-examples
 /src/routes/style-guide
+/src/routes/dev

@@ -23,7 +23,7 @@
 	data-slot="sidebar-trigger"
 	variant="ghost"
 	size="icon-sm"
-	class={cn("cn-sidebar-trigger", className)}
+	class={cn("cn-sidebar-trigger hover:border-transparent cursor-pointer", className)}
 	type="button"
 	onclick={(e) => {
 		onclick?.(e);
@@ -31,6 +31,7 @@
 	}}
 	{...restProps}
 >
-	<PanelLeftIcon />
+	<!-- <PanelLeftIcon /> -->
+	<img src="/sidebar-simple-fill.svg" alt="toggle sidebar" />
 	<span class="sr-only">Toggle Sidebar</span>
 </Button>

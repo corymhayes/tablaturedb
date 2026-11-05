@@ -52,8 +52,8 @@ importers:
         specifier: ^3.12.2
         version: 3.12.2
       '@lucide/svelte':
-        specifier: ^1.64.0
-        version: 1.64.0(svelte@5.56.4(@typescript-eslint/types@8.62.0))
+        specifier: ^1.66.0
+        version: 1.66.0(svelte@5.56.4(@typescript-eslint/types@8.62.0))
       '@neondatabase/serverless':
         specifier: ^1.1.0
         version: 1.1.0
@@ -727,8 +727,8 @@ packages:
   '@levischuck/tiny-cbor@0.2.11':
     resolution: {integrity: sha512-llBRm4dT4Z89aRsm6u2oEZ8tfwL/2l6BwpZ7JcyieouniDECM5AqNgr/y08zalEIvW3RSK4upYyybDcmjXqAow==}
 
-  '@lucide/svelte@1.64.0':
-    resolution: {integrity: sha512-PSFui8Gkk0JcU4nXljZzy+MnBhXeY4DIblvvcDNPIvL6r5NIngeDfAvBs4C/XDlz+dTth9+LcHy6/zdhEmxEwQ==}
+  '@lucide/svelte@1.66.0':
+    resolution: {integrity: sha512-G2qFyutQpgk9TY0QYgqXk9rQtUt8p509mFpQzmTpyc894hfRSFhGNcGAVAUgB8znAyVsp5WTF/2vmCwprnNQ/w==}
     peerDependencies:
       svelte: ^5
 
@@ -4658,7 +4658,7 @@ snapshots:
 
   '@levischuck/tiny-cbor@0.2.11': {}
 
-  '@lucide/svelte@1.64.0(svelte@5.56.4(@typescript-eslint/types@8.62.0))':
+  '@lucide/svelte@1.66.0(svelte@5.56.4(@typescript-eslint/types@8.62.0))':
     dependencies:
       svelte: 5.56.4(@typescript-eslint/types@8.62.0)
 

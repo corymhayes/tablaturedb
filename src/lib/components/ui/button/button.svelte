@@ -15,7 +15,7 @@
 				ghost:
 					"hover:border-primary hover:text-primary dark:hover:bg-accent aria-expanded:bg-muted aria-expanded:text-foreground",
 				destructive:
-					"border-transparent text-primary-foreground hover:bg-destructive-background hover:text-destructive-foreground hover:border-destructive-foreground focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/20 focus-visible:border-destructive/40 dark:hover:bg-destructive/30",
+					"font-light border-transparent text-primary-foreground hover:bg-destructive-background hover:text-destructive-foreground hover:border-destructive-foreground focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/20 focus-visible:border-destructive/40 dark:hover:bg-destructive/30",
 				link: "text-primary underline-offset-4 hover:underline",
 				inactive:
 					"border-border bg-secondary text-muted-foreground hover:bg-accent hover:border-primary hover:text-primary aria-pressed:bg-primary aria-pressed:border-primary aria-pressed:text-primary-foreground"
